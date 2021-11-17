@@ -1,0 +1,41 @@
+---
+title: "0-wrangling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+# Cleaning
+This is an example: we'll save the mtcars data set in to the **data/raw/** folder.
+
+```{r}
+mtcars %>% 
+  #write_csv("data/raw/mtcars.csv")
+  write_csv(here("data/raw/mtcars.csv")) # avoids trouble with file path breaking
+
+#https://github.com/jennybc/here_here
+```
+
+Imagine we do some cleaning.
+
+```{r}
+raw_data <- read_csv("data/raw/mtcars.csv")
+
+raw_data %>% 
+  select(mpg, cyl, disp) %>% 
+  write_csv("data/processed/mtcars-subset.csv")
+```
+
+# Semantic stuff
+```{r}
+subset_data <- read_csv("data/processed/mtcars-subset.csv")
+
+subset_data %>% 
+  mutate(mpg = mpg*2) %>% 
+  write_csv("data/processed/mtcars-mutated.csv")
+```
+

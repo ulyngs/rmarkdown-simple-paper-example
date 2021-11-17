@@ -1,0 +1,50 @@
+---
+title: "1-analyses"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+
+analysis_data <- read_csv("data/processed/mtcars-mutated.csv")
+```
+
+# Analysis stuff
+
+Imagine we do something that takes a long time!
+
+```{r}
+print("sleep for a bit...")
+
+Sys.sleep(5)
+
+complex_data <- analysis_data %>% 
+  mutate(mpg = mpg*245)
+```
+
+## Save out a figure
+```{r}
+complex_data %>% 
+  mutate(cyl = factor(cyl)) %>% 
+  ggplot() +
+    geom_boxplot(aes(x = cyl, y = mpg))
+
+ggsave("figures/complex_figure.png", height = 5, width = 5)
+```
+
+
+## Save out the stuff
+```{r}
+complex_data %>% write_csv("data/processed/complex_data.csv")
+
+# saveRDS()
+
+# Save an object to a file
+#saveRDS(object, file = "my_data.rds")
+# Restore the object
+#readRDS(file = "my_data.rds")
+
+```
+
